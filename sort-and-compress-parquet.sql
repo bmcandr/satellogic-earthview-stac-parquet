@@ -22,4 +22,4 @@ COPY (
     COMPRESSION_LEVEL 22,
     ROW_GROUP_SIZE    15000);
 
-select COUNT(*) from READ_PARQUET('sorted.level22.pq'); -- 7,095,985 records & 284 MB
+select COUNT(*) from READ_PARQUET('sorted.level22.parquet'); -- 7,095,985 records & 284 MB
