@@ -35,8 +35,6 @@ I performed the conversion in AWS EC2 on a [`t3.large` instance](https://aws.ama
 * Create a Python virtual environment and install dependencies:
 
     ```sh
-    $ mkdir satellogic-stac-geoparquet
-    $ satellogic-stac-geoparquet
     $ pyenv local 3.11
     $ python -m venv venv
     $ source venv/bin/activate
