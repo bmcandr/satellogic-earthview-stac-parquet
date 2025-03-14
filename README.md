@@ -25,6 +25,13 @@ I performed the conversion in AWS EC2 on a [`t3.large` instance](https://aws.ama
 
 ### Setup
 
+* Clone this repo:
+
+    ```sh
+    $ git clone git@github.com:bmcandr/satellogic-earthview-stac-parquet.git
+    $ cd satellogic-earthview-stac-parquet
+    ```
+
 * Create a Python virtual environment and install dependencies:
 
     ```sh
