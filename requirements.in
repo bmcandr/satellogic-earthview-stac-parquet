@@ -1,0 +1,13 @@
+aiofiles
+aiohttp
+click
+duckdb
+geopandas
+ipyleaflet
+lonboard
+matplotlib
+numpy
+pystac
+stac-geoparquet
+stacrs
+tqdm
