@@ -152,7 +152,13 @@ The spatially sorted, compressed STAC GeoParquet file containing the entirety of
 
 `s3://satellogic-earthview-stac-geoparquet/satellogic-earthview-stac-items.parquet`
 
-**Check out the included [notebook](exploring-satellogic-earthview.ipynb) that demonstrates how to use `duckdb`, `h3`, `geopandas`, and `lonboard` explore and visualize this dataset.**
+**Check out the included [notebook](exploring-satellogic-earthview.ipynb) that demonstrates how to use `duckdb`, `h3`, `geopandas`, `lonboard`, `stacrs`, and `ipyleaflet` to explore this metadata and display the images it describes without downloading a single file!**
+
+Here's a sneak peek at images rendered on a slippy map using a tile server that reads the data directly from S3:
+
+| visual | analytic: true color | analytic: ndvi |
+|--------|-------|------|
+|<img src="images/visual-tiles.png" width=300 alt="visual"/> | <img src="images/analytic-true-color-tiles.png" width=300 alt="analytic: true color"/> | <img src="images/analytic-ndvi-tiles.png" width=300 alt="analytic: ndvi"/> |
 
 ----
 
