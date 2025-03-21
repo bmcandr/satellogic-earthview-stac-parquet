@@ -4,6 +4,7 @@ click
 duckdb
 geopandas
 ipyleaflet
+jupyterlab
 lonboard
 matplotlib
 numpy
