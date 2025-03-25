@@ -1,6 +1,7 @@
 import asyncio
 import json
 from pathlib import Path
+from typing import cast
 
 import aiofiles
 import aiohttp
@@ -60,34 +61,51 @@ async def fetch_item_and_save(
     default=False,
     show_default=True,
 )
+@click.option(
+    "-r",
+    "--recursive",
+    is_flag=True,
+    default=False,
+    show_default=True,
+)
 def scrape_catalog_to_ndjson(
     catalog_uri: str,
     directory: Path,
     quiet: bool,
+    recursive: bool,
 ):
-    """Scrape a static STAC Catalog to ndjson."""
     Path(directory).mkdir(parents=True, exist_ok=True)
 
-    async def _scrape_catalog():
-        catalog = pystac.Catalog.from_file(catalog_uri)
+    async def _scrape_catalog(catalog: pystac.Catalog):
         click.echo(f"Processing catalog {catalog.title}...")
-        item_links = catalog.get_item_links()
+        if recursive:
+            if item_links := catalog.get_item_links():
+                item_hrefs = [link.absolute_href for link in item_links]
+            elif child_links := catalog.get_links(rel=pystac.RelType.CHILD):
+                for cl in child_links:
+                    _catalog = cast(pystac.Catalog, cl.target)
+                    await _scrape_catalog(_catalog)
+                return
+            else:
+                return
 
         async with aiohttp.ClientSession() as session:
             tasks = [
                 fetch_item_and_save(
                     session,
-                    item_link.href,
+                    item_href,
                     Path(directory / f"{catalog.title}.json"),
                 )
-                for item_link in item_links
+                for item_href in item_hrefs
             ]
             if quiet:
                 await asyncio.gather(*tasks)
             else:
                 await tqdm_asyncio.gather(*tasks)
 
-    asyncio.run(_scrape_catalog())
+    catalog = pystac.Catalog.from_file(catalog_uri)
+    catalog.normalize_hrefs(catalog_uri)
+    asyncio.run(_scrape_catalog(catalog))
 
 
 @cli.command
